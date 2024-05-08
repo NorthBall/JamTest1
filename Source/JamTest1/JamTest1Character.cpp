@@ -40,7 +40,7 @@ AJamTest1Character::AJamTest1Character()
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
 	CameraBoom->TargetArmLength = 400.0f; // The camera follows at this distance behind the character	
-	CameraBoom->bUsePawnControlRotation = true; // Rotate the arm based on the controller
+	//CameraBoom->bUsePawnControlRotation = true; // Rotate the arm based on the controller
 
 	// Create a follow camera
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
@@ -106,8 +106,8 @@ void AJamTest1Character::Move(const FInputActionValue& Value)
 		const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
 		// add movement 
-		AddMovementInput(ForwardDirection, MovementVector.Y);
-		AddMovementInput(RightDirection, MovementVector.X);
+		AddMovementInput(FVector(0,1,0), MovementVector.X);
+		AddMovementInput(FVector(1,0,0), MovementVector.Y);
 	}
 }
 
