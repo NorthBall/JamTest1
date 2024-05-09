@@ -53,6 +53,8 @@ public:
 	
 	virtual void TakeDamage_Implementation(AActor* From, float damage) override;
 
+	virtual void Heal_Implementation(float damage) override;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	UJT_SkillComponent* SkillComponent;
 

@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Pickup.h"
+#include "DamageableActor.h"
 #include "Components/BoxComponent.h"
 
 // Sets default values
@@ -35,5 +36,10 @@ void APickup::Tick(float DeltaTime)
 void APickup::OnEnterPickupBox(UPrimitiveComponent* OverlappedComp, AActor* Other, UPrimitiveComponent* OtherComp,
 	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	if (!IsValid(Other))
+		return;
+	if (Other->GetClass()->ImplementsInterface(UDamageableActor::StaticClass())) {
+		IDamageableActor::Execute_Heal(Other, HealAmount);
+	}
 	Destroy();
 }
