@@ -40,3 +40,7 @@ void AJT_Enemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
+void AJT_Enemy::TakeDamage_Implementation(float Damage)
+{
+}
+

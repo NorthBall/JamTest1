@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
-#include "DamageableActor.h"
+#include "../DamageableActor.h"
 #include "JT_Enemy.generated.h"
 
 class UCapsuleComponent;
 
 UCLASS()
-class JAMTEST1_API AJT_Enemy : public APawn, public DamageableActor
+class JAMTEST1_API AJT_Enemy : public APawn, public IDamageableActor
 {
 	GENERATED_BODY()
 
@@ -35,5 +35,5 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	virtual void TakeDamage_Implementation(float Damage) override;
+	virtual void TakeDamage_Implementation(float damage) override;
 };
