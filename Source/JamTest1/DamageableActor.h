@@ -23,5 +23,5 @@ class JAMTEST1_API IDamageableActor
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Damage")
-	void TakeDamage(float Damage);
+	void TakeDamage(AActor* From, float Damage);
 };

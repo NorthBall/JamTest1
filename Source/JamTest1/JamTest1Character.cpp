@@ -76,7 +76,7 @@ void AJamTest1Character::BeginPlay()
 	DamageComponent->SetHealthBarWidget(Cast<UCharacterHealthBar>(HealthBarWidget->GetUserWidgetObject()));
 }
 
-void AJamTest1Character::TakeDamage_Implementation(float Damage)
+void AJamTest1Character::TakeDamage_Implementation(AActor* From, float Damage)
 {
 	DamageComponent->TakeDamage(Damage);
 }

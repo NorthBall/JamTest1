@@ -6,6 +6,7 @@
 #include "GameFramework/Pawn.h"
 #include "../DamageableActor.h"
 #include "../DamageComponent.h"
+#include "../ImpulseComponent.h"
 #include "../CharacterHealthBar.h"
 #include "JT_Enemy.generated.h"
 
@@ -37,11 +38,14 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	virtual void TakeDamage_Implementation(float damage) override;
+	virtual void TakeDamage_Implementation(AActor* From, float damage) override;
 
 	UPROPERTY(VisibleAnywhere)
 	class UDamageComponent* DamageComponent;
 
 	UPROPERTY(VisibleAnywhere)
 	class UWidgetComponent* HealthBarWidget;
+
+	UPROPERTY(VisibleAnywhere)
+	class UImpulseComponent* ImpulseComponent;
 };

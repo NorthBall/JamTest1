@@ -51,7 +51,7 @@ class AJamTest1Character : public ACharacter, public IDamageableActor
 public:
 	AJamTest1Character();
 	
-	virtual void TakeDamage_Implementation(float damage) override;
+	virtual void TakeDamage_Implementation(AActor* From, float damage) override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	UJT_SkillComponent* SkillComponent;

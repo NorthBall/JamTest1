@@ -17,6 +17,9 @@ AJT_Enemy::AJT_Enemy()
 
 	DamageComponent = CreateDefaultSubobject<UDamageComponent>(TEXT("DamageComponent"));
 	DamageComponent->MaxHealth = 100.;
+	ImpulseComponent = CreateDefaultSubobject<UImpulseComponent>(TEXT("ImpulseComponent"));
+	ImpulseComponent->ImpulseTime = .5;
+	ImpulseComponent->SetActor(this);
 	HealthBarWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("HealthBarWidget"));
 	HealthBarWidget->SetupAttachment(RootComponent);
 }
@@ -36,7 +39,6 @@ void AJT_Enemy::BeginPlay()
 void AJT_Enemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 // Called to bind functionality to input
@@ -46,8 +48,9 @@ void AJT_Enemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
-void AJT_Enemy::TakeDamage_Implementation(float Damage)
+void AJT_Enemy::TakeDamage_Implementation(AActor* From, float Damage)
 {
+	ImpulseComponent->AddImpulse(From, Damage);
 	DamageComponent->TakeDamage(Damage);
 }
 
