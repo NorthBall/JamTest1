@@ -74,9 +74,9 @@ void AJamTest1Character::BeginPlay()
 	DamageComponent->SetHealthBarWidget(Cast<UCharacterHealthBar>(HealthBarWidget->GetUserWidgetObject()));
 }
 
-void AJamTest1Character::TakeDamage_Implementation(float damage)
+void AJamTest1Character::TakeDamage_Implementation(float Damage)
 {
-	DamageComponent->TakeDamage(damage);
+	DamageComponent->TakeDamage(Damage);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -122,7 +122,6 @@ void AJamTest1Character::Move(const FInputActionValue& Value)
 		AddMovementInput(FVector(0,1,0), MovementVector.X);
 		AddMovementInput(FVector(1,0,0), MovementVector.Y);
 	}
-	DamageComponent->TakeDamage(1);
 }
 
 void AJamTest1Character::Look(const FInputActionValue& Value)
