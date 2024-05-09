@@ -3,7 +3,7 @@
 
 #include "CharacterHealthBar.h"
 
-void UCharacterHealthBar::SetHealthBarValue(float value)
+void UCharacterHealthBar::SetHealthBarValue(float Value)
 {
-	HealthBar->SetPercent(value);
+	HealthBar->SetPercent(Value);
 }
