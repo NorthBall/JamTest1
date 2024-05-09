@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "../DamageableActor.h"
+#include "../DamageComponent.h"
+#include "../CharacterHealthBar.h"
 #include "JT_Enemy.generated.h"
 
 class UCapsuleComponent;
@@ -36,4 +38,10 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	virtual void TakeDamage_Implementation(float damage) override;
+
+	UPROPERTY(VisibleAnywhere)
+	class UDamageComponent* DamageComponent;
+
+	UPROPERTY(VisibleAnywhere)
+	class UWidgetComponent* HealthBarWidget;
 };

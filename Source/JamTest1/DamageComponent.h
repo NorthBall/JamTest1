@@ -22,6 +22,9 @@ public:
 	UFUNCTION()
 	void TakeDamage(float Damage);
 
+	UFUNCTION()
+	bool IsDead();
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
 	float MaxHealth;
 	UPROPERTY(BlueprintReadOnly)

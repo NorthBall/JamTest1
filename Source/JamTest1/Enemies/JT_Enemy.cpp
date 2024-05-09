@@ -4,6 +4,7 @@
 #include "JT_Enemy.h"
 
 #include "Components/CapsuleComponent.h"
+#include "Components/WidgetComponent.h"
 
 // Sets default values
 AJT_Enemy::AJT_Enemy()
@@ -13,6 +14,11 @@ AJT_Enemy::AJT_Enemy()
 
 	MainCollision = CreateDefaultSubobject<UCapsuleComponent>("MainCollision");
 	RootComponent = MainCollision;
+
+	DamageComponent = CreateDefaultSubobject<UDamageComponent>(TEXT("DamageComponent"));
+	DamageComponent->MaxHealth = 100.;
+	HealthBarWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("HealthBarWidget"));
+	HealthBarWidget->SetupAttachment(RootComponent);
 }
 
 void AJT_Enemy::TargetPlayer_Implementation(AActor* Player)
@@ -23,7 +29,7 @@ void AJT_Enemy::TargetPlayer_Implementation(AActor* Player)
 void AJT_Enemy::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	DamageComponent->SetHealthBarWidget(Cast<UCharacterHealthBar>(HealthBarWidget->GetUserWidgetObject()));
 }
 
 // Called every frame
@@ -42,5 +48,6 @@ void AJT_Enemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AJT_Enemy::TakeDamage_Implementation(float Damage)
 {
+	DamageComponent->TakeDamage(Damage);
 }
 
