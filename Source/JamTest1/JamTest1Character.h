@@ -5,11 +5,14 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
+#include "DamageComponent.h"
+#include "CharacterHealthBar.h"
+#include "DamageableActor.h"
 #include "JamTest1Character.generated.h"
 
 
 UCLASS(config=Game)
-class AJamTest1Character : public ACharacter
+class AJamTest1Character : public ACharacter, public IDamageableActor
 {
 	GENERATED_BODY()
 
@@ -37,9 +40,16 @@ class AJamTest1Character : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* LookAction;
 
+	UPROPERTY(VisibleAnywhere)
+	class UDamageComponent* DamageComponent;
+
+	UPROPERTY(VisibleAnywhere)
+	class UWidgetComponent* HealthBarWidget;
+
 public:
 	AJamTest1Character();
 	
+	virtual void TakeDamage_Implementation(float damage) override;
 
 protected:
 

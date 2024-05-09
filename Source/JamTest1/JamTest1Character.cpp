@@ -4,6 +4,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
+#include "Components/WidgetComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -49,6 +50,11 @@ AJamTest1Character::AJamTest1Character()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
+
+	DamageComponent = CreateDefaultSubobject<UDamageComponent>(TEXT("DamageComponent"));
+	DamageComponent->MaxHealth = 100.;
+	HealthBarWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("HealthBarWidget"));
+	HealthBarWidget->SetupAttachment(RootComponent);
 }
 
 void AJamTest1Character::BeginPlay()
@@ -64,6 +70,13 @@ void AJamTest1Character::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
+
+	DamageComponent->SetHealthBarWidget(Cast<UCharacterHealthBar>(HealthBarWidget->GetUserWidgetObject()));
+}
+
+void AJamTest1Character::TakeDamage_Implementation(float damage)
+{
+	DamageComponent->TakeDamage(damage);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -109,6 +122,7 @@ void AJamTest1Character::Move(const FInputActionValue& Value)
 		AddMovementInput(FVector(0,1,0), MovementVector.X);
 		AddMovementInput(FVector(1,0,0), MovementVector.Y);
 	}
+	DamageComponent->TakeDamage(1);
 }
 
 void AJamTest1Character::Look(const FInputActionValue& Value)
