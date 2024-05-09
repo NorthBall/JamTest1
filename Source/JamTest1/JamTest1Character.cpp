@@ -10,6 +10,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "JamTest1GameMode.h"
 #include "Player/JT_SkillComponent.h"
 
 
@@ -79,6 +80,21 @@ void AJamTest1Character::BeginPlay()
 void AJamTest1Character::TakeDamage_Implementation(AActor* From, float Damage)
 {
 	DamageComponent->TakeDamage(Damage);
+	if(DamageComponent->IsDead())
+	{
+		if(!IsValid(GetWorld()))
+		{
+			return;
+		}
+
+		auto GameMode = GetWorld()->GetAuthGameMode<AJamTest1GameMode>();
+		if(!IsValid(GameMode))
+		{
+			return;
+		}
+
+		GameMode->PlayerLose();
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

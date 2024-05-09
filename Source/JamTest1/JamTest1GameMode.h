@@ -14,6 +14,14 @@ class AJamTest1GameMode : public AGameModeBase
 public:
 	AJamTest1GameMode();
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void PlayerWin();
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void PlayerLose();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void StartNewGame();
+
 protected:
 	virtual void BeginPlay() override;
 };

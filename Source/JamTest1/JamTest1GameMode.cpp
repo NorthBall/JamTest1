@@ -15,6 +15,18 @@ AJamTest1GameMode::AJamTest1GameMode()
 	}
 }
 
+void AJamTest1GameMode::PlayerWin_Implementation()
+{
+}
+
+void AJamTest1GameMode::PlayerLose_Implementation()
+{
+}
+
+void AJamTest1GameMode::StartNewGame_Implementation()
+{
+}
+
 void AJamTest1GameMode::BeginPlay()
 {
 	Super::BeginPlay();

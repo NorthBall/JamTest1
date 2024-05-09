@@ -20,6 +20,8 @@ class JAMTEST1_API AJT_Enemy : public APawn, public IDamageableActor
 public:
 	// Sets default values for this pawn's properties
 	AJT_Enemy();
+	
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void TargetPlayer(AActor* Player);
@@ -30,6 +32,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UCapsuleComponent* MainCollision;
+
+	UFUNCTION(BlueprintNativeEvent)
+	void OnDeath();
 	
 public:	
 	// Called every frame
@@ -48,4 +53,8 @@ public:
 
 	UPROPERTY(VisibleAnywhere)
 	class UImpulseComponent* ImpulseComponent;
+
+private:
+	UFUNCTION()
+	void RemoveFromGameState();
 };
