@@ -41,10 +41,12 @@ void UImpulseComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAct
 
 void UImpulseComponent::AddImpulse(AActor* FromActor, float Damage)
 {
-	RemainingImpulseTime = ImpulseTime;
-	ImpulseDirection = (FromActor->GetActorLocation() - Actor->GetActorLocation()) * 1000;
-	ImpulseDirection.Z = 0;
-	ImpulseStrength = Damage * 30;
+	if (IsValid(FromActor) && IsValid(Actor)) {
+		RemainingImpulseTime = ImpulseTime;
+		ImpulseDirection = (FromActor->GetActorLocation() - Actor->GetActorLocation()) * 1000;
+		ImpulseDirection.Z = 0;
+		ImpulseStrength = Damage * 30;
+	}
 }
 
 void UImpulseComponent::SetActor(AActor* OwnerActor)
