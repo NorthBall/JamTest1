@@ -11,6 +11,8 @@
 #include "JamTest1Character.generated.h"
 
 
+class UJT_SkillComponent;
+
 UCLASS(config=Game)
 class AJamTest1Character : public ACharacter, public IDamageableActor
 {
@@ -50,6 +52,9 @@ public:
 	AJamTest1Character();
 	
 	virtual void TakeDamage_Implementation(float damage) override;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	UJT_SkillComponent* SkillComponent;
 
 protected:
 

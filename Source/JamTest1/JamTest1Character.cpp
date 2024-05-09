@@ -10,6 +10,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Player/JT_SkillComponent.h"
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -53,6 +54,7 @@ AJamTest1Character::AJamTest1Character()
 
 	DamageComponent = CreateDefaultSubobject<UDamageComponent>(TEXT("DamageComponent"));
 	DamageComponent->MaxHealth = 100.;
+	SkillComponent = CreateDefaultSubobject<UJT_SkillComponent>("SkillComponent");
 	HealthBarWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("HealthBarWidget"));
 	HealthBarWidget->SetupAttachment(RootComponent);
 }
