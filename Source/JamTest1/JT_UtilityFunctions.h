@@ -15,4 +15,7 @@ class JAMTEST1_API UJT_UtilityFunctions : public UBlueprintFunctionLibrary
 public:
 	UFUNCTION(BlueprintCallable, Category = "DealDamage")
 	static void DealDamage(AActor* actor, float damage);
+
+	UFUNCTION(BlueprintCallable)
+	static bool SpawnProjectile(AActor* Caller, TSubclassOf<AActor> ProjectileClass, FVector RelativeLocation = FVector(0,0,0));
 };

@@ -13,6 +13,9 @@ class AJamTest1GameMode : public AGameModeBase
 
 public:
 	AJamTest1GameMode();
+
+protected:
+	virtual void BeginPlay() override;
 };
 
 
