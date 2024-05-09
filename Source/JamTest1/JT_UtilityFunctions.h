@@ -16,6 +16,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "DealDamage")
 	static void DealDamage(AActor* Actor, AActor* FromActor, float Damage);
 
+	UFUNCTION(BlueprintCallable, Category = "DealDamage")
+	static void AddImpulse(AActor* Actor, AActor* FromActor, float Impulse);
+
 	UFUNCTION(BlueprintCallable)
 	static bool SpawnProjectile(AActor* Caller, TSubclassOf<AActor> ProjectileClass, FVector RelativeLocation = FVector(0,0,0));
 };

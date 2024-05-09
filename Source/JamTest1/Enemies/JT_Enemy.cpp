@@ -76,13 +76,17 @@ void AJT_Enemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AJT_Enemy::TakeDamage_Implementation(AActor* From, float Damage)
 {
-	ImpulseComponent->AddImpulse(From, Damage);
 	DamageComponent->TakeDamage(Damage);
 
 	if (DamageComponent->IsDead())
 	{
 		OnDeath();
 	}
+}
+
+void AJT_Enemy::AddImpulse_Implementation(AActor* From, float Impulse)
+{
+	ImpulseComponent->AddImpulse(From, Impulse);
 }
 
 void AJT_Enemy::RemoveFromGameState()
