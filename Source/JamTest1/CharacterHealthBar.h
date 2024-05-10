@@ -17,7 +17,8 @@ class JAMTEST1_API UCharacterHealthBar : public UUserWidget
 	GENERATED_BODY()
 
 public:
-	void SetHealthBarValue(float value);
+	UFUNCTION()
+	void OnSetHealth(float value);
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))

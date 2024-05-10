@@ -57,6 +57,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	UJT_SkillComponent* SkillComponent;
 
+	UPROPERTY(VisibleAnywhere)
+	class UWidgetComponent* HealthBarWidget;
+
 protected:
 
 	/** Called for movement input */

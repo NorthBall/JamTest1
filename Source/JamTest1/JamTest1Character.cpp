@@ -56,12 +56,17 @@ AJamTest1Character::AJamTest1Character()
 	DamageComponent = CreateDefaultSubobject<UDamageComponent>(TEXT("DamageComponent"));
 	DamageComponent->MaxHealth = 100.;
 	SkillComponent = CreateDefaultSubobject<UJT_SkillComponent>("SkillComponent");
+	HealthBarWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("HealthBarWidget"));
+	HealthBarWidget->SetupAttachment(RootComponent);
 }
 
 void AJamTest1Character::BeginPlay()
 {
 	// Call the base class  
 	Super::BeginPlay();
+
+	DamageComponent->OnSetHealthDelegate.BindDynamic(Cast<UCharacterHealthBar>(
+		HealthBarWidget->GetUserWidgetObject()), &UCharacterHealthBar::OnSetHealth);
 
 	//Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
