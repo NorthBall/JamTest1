@@ -72,7 +72,9 @@ protected:
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
 
-	void OnEffect(FGameplayTag EffectTag, FTimerHandle Timer, bool IsEnded);
+	void OnEffectAdded(FGameplayTag EffectTag, FTimerHandle Timer);
+
+	void OnEffectRemoved(FGameplayTag EffectTag);
 
 protected:
 	// APawn interface

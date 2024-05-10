@@ -63,7 +63,8 @@ void AJamTest1Character::BeginPlay()
 	// Call the base class  
 	Super::BeginPlay();
 
-	SkillComponent->OnEffect.AddDynamic(this, &AJamTest1Character::OnEffect);
+	SkillComponent->OnEffectAdded.AddDynamic(this, &AJamTest1Character::OnEffectAdded);
+	SkillComponent->OnEffectRemoved.AddDynamic(this, &AJamTest1Character::OnEffectRemoved);
 
 	//Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
@@ -115,30 +116,24 @@ UDamageComponent* AJamTest1Character::GetDamageComponent_Implementation()
 	return DamageComponent;
 }
 
-void AJamTest1Character::OnEffect(FGameplayTag EffectTag, FTimerHandle Timer, bool IsEnded)
+void AJamTest1Character::OnEffectAdded(FGameplayTag EffectTag, FTimerHandle Timer)
 {
-	if (IsEnded) {
-		if (EffectTag.MatchesTag(FGameplayTag::RequestGameplayTag("Effect.Haste")))
-		{
-			GetCharacterMovement()->MaxWalkSpeed = DefaultWalkSpeed;
-		}
-
-		if (EffectTag.MatchesTag(FGameplayTag::RequestGameplayTag("Effect.Weapon")))
-		{
-			auto PlayerChar = Cast<AJamTest1Character>(GetOwner());
-			if (!IsValid(PlayerChar))
-			{
-				return;
-			}
-
-			PlayerChar->RemoveWeapon(EffectTag);
-		}
+	if (EffectTag.MatchesTag(FGameplayTag::RequestGameplayTag("Effect.Haste")))
+	{
+		GetCharacterMovement()->MaxWalkSpeed = DefaultWalkSpeed * 2;
 	}
-	else {
-		if (EffectTag.MatchesTag(FGameplayTag::RequestGameplayTag("Effect.Haste")))
-		{
-			GetCharacterMovement()->MaxWalkSpeed = DefaultWalkSpeed * 2;
-		}
+}
+
+void AJamTest1Character::OnEffectRemoved(FGameplayTag EffectTag)
+{
+	if (EffectTag.MatchesTag(FGameplayTag::RequestGameplayTag("Effect.Haste")))
+	{
+		GetCharacterMovement()->MaxWalkSpeed = DefaultWalkSpeed;
+	}
+
+	if (EffectTag.MatchesTag(FGameplayTag::RequestGameplayTag("Effect.Weapon")))
+	{
+		RemoveWeapon_Implementation(EffectTag);
 	}
 }
 
