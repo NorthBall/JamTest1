@@ -28,6 +28,14 @@ void UDamageComponent::TakeDamage(float Damage)
 	HealthBar->SetHealthBarValue(CurrentHealth / MaxHealth);
 }
 
+
+void UDamageComponent::Heal(float Heal)
+{
+	CurrentHealth = FMath::Max(CurrentHealth + Heal, MaxHealth);
+	HealthBar->SetHealthBarValue(CurrentHealth / MaxHealth);
+}
+
+
 bool UDamageComponent::IsDead()
 {
 	return CurrentHealth <= 0;

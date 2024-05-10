@@ -3,12 +3,21 @@
 
 #include "JT_UtilityFunctions.h"
 
-void UJT_UtilityFunctions::DealDamage(AActor* actor, AActor* FromActor, float damage)
+void UJT_UtilityFunctions::DealDamage(AActor* Actor, AActor* FromActor, float Damage)
 {
-	if (!IsValid(actor))
+	if (!IsValid(Actor))
 		return;
-	if (actor->GetClass()->ImplementsInterface(UDamageableActor::StaticClass())) {
-		IDamageableActor::Execute_TakeDamage(actor, FromActor, damage);
+	if (Actor->GetClass()->ImplementsInterface(UDamageableActor::StaticClass())) {
+		IDamageableActor::Execute_TakeDamage(Actor, FromActor, Damage);
+	}
+}
+
+void UJT_UtilityFunctions::AddImpulse(AActor* Actor, AActor* FromActor, float Impulse)
+{
+	if (!IsValid(Actor))
+		return;
+	if (Actor->GetClass()->ImplementsInterface(UDamageableActor::StaticClass())) {
+		IDamageableActor::Execute_AddImpulse(Actor, FromActor, Impulse);
 	}
 }
 

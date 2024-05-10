@@ -97,6 +97,11 @@ void AJamTest1Character::TakeDamage_Implementation(AActor* From, float Damage)
 	}
 }
 
+void AJamTest1Character::Heal_Implementation(float Heal)
+{
+	DamageComponent->Heal(Heal);
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Input
 
