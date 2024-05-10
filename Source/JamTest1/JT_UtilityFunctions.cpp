@@ -11,7 +11,7 @@ void UJT_UtilityFunctions::DealDamage(AActor* Actor, AActor* FromActor, float Da
 		return;
 	if (Actor->GetClass()->ImplementsInterface(UDamageableActor::StaticClass())) {
 		auto PlayerChar = Cast<AJamTest1Character>(FromActor);
-		if (!IsValid(PlayerChar) && PlayerChar->SkillComponent->HasEffect(FGameplayTag::RequestGameplayTag("Effect.DoubleDamage"))) {
+		if (IsValid(PlayerChar) && PlayerChar->SkillComponent->HasEffect(FGameplayTag::RequestGameplayTag("Effect.DoubleDamage"))) {
 			Damage *= 2;
 		}
 		IDamageableActor::Execute_TakeDamage(Actor, FromActor, Damage);
@@ -75,6 +75,9 @@ bool UJT_UtilityFunctions::SpawnProjectile(AActor* Caller, TSubclassOf<AActor> P
 		SpawnLocation = Caller->GetActorLocation() + RelativeLocation;
 	}
 	FRotator SpawnRotation = Caller->GetActorRotation();
+
+	FActorSpawnParameters SpawnParameters;
+	SpawnParameters.Owner = Caller;
 	
-	return IsValid(Caller->GetWorld()->SpawnActor(ProjectileClass.Get(), &SpawnLocation, &SpawnRotation));
+	return IsValid(Caller->GetWorld()->SpawnActor(ProjectileClass.Get(), &SpawnLocation, &SpawnRotation, SpawnParameters));
 }
