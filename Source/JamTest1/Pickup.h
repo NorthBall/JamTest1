@@ -33,7 +33,4 @@ public:
 	UFUNCTION()
 	virtual void OnEnterPickupBox(UPrimitiveComponent* OverlappedComp, AActor* Other, UPrimitiveComponent* OtherComp,
 		int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-	UPROPERTY(EditAnywhere)
-	float HealAmount = 50;
 };
