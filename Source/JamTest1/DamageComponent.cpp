@@ -34,7 +34,9 @@ void UDamageComponent::TakeDamage(float Damage)
 void UDamageComponent::Heal(float Heal)
 {
 	CurrentHealth = FMath::Min(CurrentHealth + Heal, MaxHealth);
-	HealthBar->SetHealthBarValue(CurrentHealth / MaxHealth);
+	if (IsValid(HealthBar)) {
+		HealthBar->SetHealthBarValue(CurrentHealth / MaxHealth);
+	}
 }
 
 
