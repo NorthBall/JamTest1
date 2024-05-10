@@ -45,15 +45,14 @@ class AJamTest1Character : public ACharacter, public IDamageableActor
 	UPROPERTY(VisibleAnywhere)
 	class UDamageComponent* DamageComponent;
 
-	UPROPERTY(VisibleAnywhere)
-	class UWidgetComponent* HealthBarWidget;
-
 public:
 	AJamTest1Character();
 	
 	virtual void TakeDamage_Implementation(AActor* From, float Damage) override;
 
 	virtual void Heal_Implementation(float Heal) override;
+
+	virtual UDamageComponent* GetDamageComponent_Implementation() override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	UJT_SkillComponent* SkillComponent;

@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "DamageableActor.h"
+#include "DamageComponent.h"
 #include "JT_UtilityFunctions.generated.h"
 
 UCLASS()
@@ -15,6 +16,9 @@ class JAMTEST1_API UJT_UtilityFunctions : public UBlueprintFunctionLibrary
 public:
 	UFUNCTION(BlueprintCallable, Category = "DealDamage")
 	static void DealDamage(AActor* Actor, AActor* FromActor, float Damage);
+
+	UFUNCTION(BlueprintCallable, Category = "DealDamage")
+	static UDamageComponent* GetDamageComponent(AActor* Actor);
 
 	UFUNCTION(BlueprintCallable, Category = "DealDamage")
 	static void AddImpulse(AActor* Actor, AActor* FromActor, float Impulse);

@@ -12,6 +12,14 @@ void UJT_UtilityFunctions::DealDamage(AActor* Actor, AActor* FromActor, float Da
 	}
 }
 
+UDamageComponent* UJT_UtilityFunctions::GetDamageComponent(AActor* Actor)
+{
+	if (IsValid(Actor) && Actor->GetClass()->ImplementsInterface(UDamageableActor::StaticClass())) {
+		return IDamageableActor::Execute_GetDamageComponent(Actor);
+	}
+	return nullptr;
+}
+
 void UJT_UtilityFunctions::AddImpulse(AActor* Actor, AActor* FromActor, float Impulse)
 {
 	if (!IsValid(Actor))

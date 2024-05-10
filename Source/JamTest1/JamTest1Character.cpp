@@ -56,8 +56,6 @@ AJamTest1Character::AJamTest1Character()
 	DamageComponent = CreateDefaultSubobject<UDamageComponent>(TEXT("DamageComponent"));
 	DamageComponent->MaxHealth = 100.;
 	SkillComponent = CreateDefaultSubobject<UJT_SkillComponent>("SkillComponent");
-	HealthBarWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("HealthBarWidget"));
-	HealthBarWidget->SetupAttachment(RootComponent);
 }
 
 void AJamTest1Character::BeginPlay()
@@ -73,8 +71,6 @@ void AJamTest1Character::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
-
-	DamageComponent->SetHealthBarWidget(Cast<UCharacterHealthBar>(HealthBarWidget->GetUserWidgetObject()));
 }
 
 void AJamTest1Character::TakeDamage_Implementation(AActor* From, float Damage)
@@ -100,6 +96,11 @@ void AJamTest1Character::TakeDamage_Implementation(AActor* From, float Damage)
 void AJamTest1Character::Heal_Implementation(float Heal)
 {
 	DamageComponent->Heal(Heal);
+}
+
+UDamageComponent* AJamTest1Character::GetDamageComponent_Implementation()
+{
+	return DamageComponent;
 }
 
 //////////////////////////////////////////////////////////////////////////

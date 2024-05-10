@@ -22,6 +22,9 @@ public:
 	UFUNCTION()
 	void TakeDamage(float Damage);
 
+	UFUNCTION(BlueprintCallable)
+	float GetHealthPercent();
+
 	UFUNCTION()
 	bool IsDead();
 

@@ -26,6 +26,9 @@ public:
 	void TakeDamage(AActor* From, float Damage);
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Damage")
+	UDamageComponent* GetDamageComponent();
+
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Damage")
 	void AddImpulse(AActor* From, float Impulse);
 
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Damage")

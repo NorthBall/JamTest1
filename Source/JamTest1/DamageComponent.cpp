@@ -25,14 +25,22 @@ void UDamageComponent::BeginPlay()
 void UDamageComponent::TakeDamage(float Damage)
 {
 	CurrentHealth = FMath::Clamp(CurrentHealth - Damage, 0.0f, MaxHealth);
-	HealthBar->SetHealthBarValue(CurrentHealth / MaxHealth);
+	if (IsValid(HealthBar)) {
+		HealthBar->SetHealthBarValue(CurrentHealth / MaxHealth);
+	}
 }
 
 
 void UDamageComponent::Heal(float Heal)
 {
-	CurrentHealth = FMath::Max(CurrentHealth + Heal, MaxHealth);
+	CurrentHealth = FMath::Min(CurrentHealth + Heal, MaxHealth);
 	HealthBar->SetHealthBarValue(CurrentHealth / MaxHealth);
+}
+
+
+float UDamageComponent::GetHealthPercent()
+{
+	return (MaxHealth > 0) ? (CurrentHealth / MaxHealth) : 0;
 }
 
 
