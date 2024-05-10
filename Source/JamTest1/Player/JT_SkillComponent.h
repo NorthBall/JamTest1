@@ -7,7 +7,9 @@
 #include "Components/ActorComponent.h"
 #include "JT_SkillComponent.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnEffectSignature, FGameplayTag, EffectTag, FTimerHandle, Timer, bool, IsEnded);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnEffectAddedSignature, FGameplayTag, EffectTag, FTimerHandle, Timer);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnEffectUpdatedSignature, FGameplayTag, EffectTag, FTimerHandle, NewTimer);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnEffectRemovedSignature, FGameplayTag, EffectTag);
 
 class UInputAction;
 
@@ -22,8 +24,12 @@ public:
 
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
-	UPROPERTY(BlueprintAssignable);
-	FOnEffectSignature OnEffect;
+	UPROPERTY(BlueprintAssignable)
+	FOnEffectAddedSignature OnEffectAdded;
+	UPROPERTY(BlueprintAssignable)
+	FOnEffectUpdatedSignature OnEffectUpdated;
+	UPROPERTY(BlueprintAssignable)
+	FOnEffectRemovedSignature OnEffectRemoved;
 	UFUNCTION(BlueprintCallable)
 	bool CommitCooldownCost(UInputAction* Skill);
 	UFUNCTION(BlueprintCallable)
