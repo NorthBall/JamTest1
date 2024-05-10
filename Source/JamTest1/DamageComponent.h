@@ -19,8 +19,6 @@ public:
 	// Sets default values for this component's properties
 	UDamageComponent();
 
-	void SetHealthBarWidget(UCharacterHealthBar* healthBar) { HealthBar = healthBar; }
-
 	UFUNCTION()
 	void TakeDamage(float Damage);
 
@@ -43,7 +41,4 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
-
-private:
-	UCharacterHealthBar* HealthBar;
 };
