@@ -7,6 +7,7 @@
 #include "JamTest1GameMode.h"
 #include "Enemies/JT_Enemy.h"
 
+
 void AJT_GameState::ResetEnemies(int32 NewValue)
 {
 	RemainingEnemies = NewValue;
@@ -20,6 +21,7 @@ void AJT_GameState::AddEnemy()
 void AJT_GameState::RemoveEnemy()
 {
 	RemainingEnemies--;
+	CurrentScore += 1;
 	if (RemainingEnemies <= 0)
 	{
 		OnLevelCleared();

@@ -30,7 +30,12 @@ protected:
 	int32 RemainingEnemies;
 	UPROPERTY(BlueprintReadWrite)
 	int32 RemainingSpawners;
+	UPROPERTY(BlueprintReadWrite)
+	float CurrentScore = 0;
 
 	UFUNCTION(BlueprintNativeEvent)
 	bool OnLevelCleared();
+
+	UPROPERTY(VisibleAnywhere)
+	class UWidgetComponent* ScoreCounterWidget;
 };
