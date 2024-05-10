@@ -36,10 +36,5 @@ void APickup::Tick(float DeltaTime)
 void APickup::OnEnterPickupBox(UPrimitiveComponent* OverlappedComp, AActor* Other, UPrimitiveComponent* OtherComp,
 	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (!IsValid(Other))
-		return;
-	if (Other->GetClass()->ImplementsInterface(UDamageableActor::StaticClass())) {
-		IDamageableActor::Execute_Heal(Other, HealAmount);
-	}
 	Destroy();
 }
