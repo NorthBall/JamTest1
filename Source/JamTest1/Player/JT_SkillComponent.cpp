@@ -13,6 +13,16 @@ UJT_SkillComponent::UJT_SkillComponent()
 	// ...
 }
 
+void UJT_SkillComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	if(IsValid(GetWorld()))
+	{
+		GetWorld()->GetTimerManager().ClearAllTimersForObject(this);
+	}
+	
+	Super::EndPlay(EndPlayReason);
+}
+
 bool UJT_SkillComponent::CommitCooldownCost(UInputAction* Skill)
 {
 	if(SkillsOnCD.Contains(Skill))

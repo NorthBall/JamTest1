@@ -18,6 +18,8 @@ public:
 	// Sets default values for this component's properties
 	UJT_SkillComponent();
 
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
 	UFUNCTION(BlueprintCallable)
 	bool CommitCooldownCost(UInputAction* Skill);
 

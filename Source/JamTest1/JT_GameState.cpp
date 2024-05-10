@@ -26,8 +26,33 @@ void AJT_GameState::RemoveEnemy()
 	}
 }
 
+void AJT_GameState::ResetSpawners(int32 NewValue)
+{
+	RemainingSpawners = NewValue;
+}
+
+void AJT_GameState::RegisterSpawner()
+{
+	RemainingSpawners++;
+}
+
+void AJT_GameState::UnregisterSpawner()
+{
+	RemainingSpawners--;
+	if (RemainingSpawners <= 0)
+	{
+		OnLevelCleared();
+	}
+}
+
 bool AJT_GameState::OnLevelCleared_Implementation()
 {
+	if(RemainingSpawners > 0
+		|| RemainingEnemies > 0)
+	{
+		return false;
+	}
+	
 	if (!IsValid(GetWorld()))
 	{
 		return false;

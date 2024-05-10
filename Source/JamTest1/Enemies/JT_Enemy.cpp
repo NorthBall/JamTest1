@@ -26,9 +26,7 @@ AJT_Enemy::AJT_Enemy()
 }
 
 void AJT_Enemy::EndPlay(const EEndPlayReason::Type EndPlayReason)
-{
-	RemoveFromGameState();
-	
+{	
 	Super::EndPlay(EndPlayReason);
 }
 
@@ -59,6 +57,7 @@ void AJT_Enemy::BeginPlay()
 
 void AJT_Enemy::OnDeath_Implementation()
 {
+	RemoveFromGameState();
 	Destroy();
 }
 

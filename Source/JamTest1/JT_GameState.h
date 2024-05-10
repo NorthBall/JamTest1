@@ -18,10 +18,18 @@ public:
 	void AddEnemy();
 	UFUNCTION()
 	void RemoveEnemy();
+	UFUNCTION()
+	void ResetSpawners(int32 NewValue);
+	UFUNCTION()
+	void RegisterSpawner();
+	UFUNCTION()
+	void UnregisterSpawner();
 	
 protected:
 	UPROPERTY(BlueprintReadWrite)
 	int32 RemainingEnemies;
+	UPROPERTY(BlueprintReadWrite)
+	int32 RemainingSpawners;
 
 	UFUNCTION(BlueprintNativeEvent)
 	bool OnLevelCleared();
