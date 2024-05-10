@@ -44,7 +44,7 @@ void UImpulseComponent::AddImpulse(AActor* FromActor, float Impulse)
 	if (IsValid(FromActor) && IsValid(Actor)) {
 		RemainingImpulseTime = ImpulseTime;
 		ImpulseDirection = (FromActor->GetActorLocation() - Actor->GetActorLocation()) * 1000;
-		ImpulseDirection.Z = 0;
+		ImpulseDirection.Z = -10;
 		ImpulseStrength = Impulse;
 	}
 }
