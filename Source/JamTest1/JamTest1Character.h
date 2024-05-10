@@ -72,8 +72,9 @@ protected:
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
 
+	UFUNCTION()
 	void OnEffectAdded(FGameplayTag EffectTag, FTimerHandle Timer);
-
+	UFUNCTION()
 	void OnEffectRemoved(FGameplayTag EffectTag);
 
 protected:
