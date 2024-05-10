@@ -21,7 +21,7 @@ AJamTest1Character::AJamTest1Character()
 {
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
-		
+
 	// Don't rotate when the controller rotates. Let that just affect the camera.
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
@@ -56,14 +56,15 @@ AJamTest1Character::AJamTest1Character()
 	DamageComponent = CreateDefaultSubobject<UDamageComponent>(TEXT("DamageComponent"));
 	DamageComponent->MaxHealth = 100.;
 	SkillComponent = CreateDefaultSubobject<UJT_SkillComponent>("SkillComponent");
-	HealthBarWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("HealthBarWidget"));
-	HealthBarWidget->SetupAttachment(RootComponent);
 }
 
 void AJamTest1Character::BeginPlay()
 {
 	// Call the base class  
 	Super::BeginPlay();
+
+	SkillComponent->OnEffectAdded.AddDynamic(this, &AJamTest1Character::OnEffectAdded);
+	SkillComponent->OnEffectRemoved.AddDynamic(this, &AJamTest1Character::OnEffectRemoved);
 
 	//Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
@@ -74,21 +75,21 @@ void AJamTest1Character::BeginPlay()
 		}
 	}
 
-	DamageComponent->SetHealthBarWidget(Cast<UCharacterHealthBar>(HealthBarWidget->GetUserWidgetObject()));
+	DefaultWalkSpeed = GetCharacterMovement()->MaxWalkSpeed;
 }
 
 void AJamTest1Character::TakeDamage_Implementation(AActor* From, float Damage)
 {
 	DamageComponent->TakeDamage(Damage);
-	if(DamageComponent->IsDead())
+	if (DamageComponent->IsDead())
 	{
-		if(!IsValid(GetWorld()))
+		if (!IsValid(GetWorld()))
 		{
 			return;
 		}
 
 		auto GameMode = GetWorld()->GetAuthGameMode<AJamTest1GameMode>();
-		if(!IsValid(GameMode))
+		if (!IsValid(GameMode))
 		{
 			return;
 		}
@@ -102,14 +103,48 @@ void AJamTest1Character::Heal_Implementation(float Heal)
 	DamageComponent->Heal(Heal);
 }
 
+void AJamTest1Character::AddWeapon_Implementation(FGameplayTag WeaponTag)
+{
+}
+
+void AJamTest1Character::RemoveWeapon_Implementation(FGameplayTag WeaponTag)
+{
+}
+
+UDamageComponent* AJamTest1Character::GetDamageComponent_Implementation()
+{
+	return DamageComponent;
+}
+
+void AJamTest1Character::OnEffectAdded(FGameplayTag EffectTag, FTimerHandle Timer)
+{
+	if (EffectTag.MatchesTag(FGameplayTag::RequestGameplayTag("Effect.Haste")))
+	{
+		GetCharacterMovement()->MaxWalkSpeed = DefaultWalkSpeed * 2;
+	}
+}
+
+void AJamTest1Character::OnEffectRemoved(FGameplayTag EffectTag)
+{
+	if (EffectTag.MatchesTag(FGameplayTag::RequestGameplayTag("Effect.Haste")))
+	{
+		GetCharacterMovement()->MaxWalkSpeed = DefaultWalkSpeed;
+	}
+
+	if (EffectTag.MatchesTag(FGameplayTag::RequestGameplayTag("Effect.Weapon")))
+	{
+		RemoveWeapon_Implementation(EffectTag);
+	}
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Input
 
 void AJamTest1Character::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	// Set up action bindings
-	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent)) {
-		
+	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
+	{
 		//Jumping
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ACharacter::Jump);
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
@@ -119,9 +154,7 @@ void AJamTest1Character::SetupPlayerInputComponent(class UInputComponent* Player
 
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AJamTest1Character::Look);
-
 	}
-
 }
 
 void AJamTest1Character::Move(const FInputActionValue& Value)
@@ -137,13 +170,13 @@ void AJamTest1Character::Move(const FInputActionValue& Value)
 
 		// get forward vector
 		const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-	
+
 		// get right vector 
 		const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
 		// add movement 
-		AddMovementInput(FVector(0,1,0), MovementVector.X);
-		AddMovementInput(FVector(1,0,0), MovementVector.Y);
+		AddMovementInput(FVector(0, 1, 0), MovementVector.X);
+		AddMovementInput(FVector(1, 0, 0), MovementVector.Y);
 	}
 }
 
@@ -159,7 +192,3 @@ void AJamTest1Character::Look(const FInputActionValue& Value)
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
 }
-
-
-
-

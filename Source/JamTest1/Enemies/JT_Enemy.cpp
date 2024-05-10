@@ -5,6 +5,7 @@
 
 #include "Components/CapsuleComponent.h"
 #include "Components/WidgetComponent.h"
+#include "Delegates/Delegate.h"
 #include "JamTest1/JT_GameState.h"
 
 // Sets default values
@@ -39,8 +40,11 @@ void AJT_Enemy::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	DamageComponent->SetHealthBarWidget(Cast<UCharacterHealthBar>(HealthBarWidget->GetUserWidgetObject()));
-	
+	UCharacterHealthBar* CharacterHealth = Cast<UCharacterHealthBar>(HealthBarWidget->GetUserWidgetObject());
+	if (IsValid(CharacterHealth)) {
+		DamageComponent->OnSetHealthDelegate.BindDynamic(CharacterHealth, &UCharacterHealthBar::OnSetHealth);
+	}
+
 	if (!IsValid(GetWorld()))
 	{
 		return;
@@ -71,6 +75,11 @@ void AJT_Enemy::Tick(float DeltaTime)
 void AJT_Enemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+}
+
+UDamageComponent* AJT_Enemy::GetDamageComponent_Implementation()
+{
+	return DamageComponent;
 }
 
 void AJT_Enemy::TakeDamage_Implementation(AActor* From, float Damage)

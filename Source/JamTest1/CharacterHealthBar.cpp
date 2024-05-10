@@ -3,7 +3,9 @@
 
 #include "CharacterHealthBar.h"
 
-void UCharacterHealthBar::SetHealthBarValue(float Value)
+void UCharacterHealthBar::OnSetHealth_Implementation(float Value)
 {
-	HealthBar->SetPercent(Value);
+	if (IsValid(HealthBar)) {
+		HealthBar->SetPercent(Value);
+	}
 }

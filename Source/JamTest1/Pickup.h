@@ -30,10 +30,7 @@ public:
 	UPROPERTY(EditAnywhere)
 	class UBoxComponent* PickupBox;
 
-	UFUNCTION()
+	UFUNCTION(BlueprintNativeEvent)
 	void OnEnterPickupBox(UPrimitiveComponent* OverlappedComp, AActor* Other, UPrimitiveComponent* OtherComp,
 		int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-	UPROPERTY(EditAnywhere)
-	float HealAmount = 50;
 };

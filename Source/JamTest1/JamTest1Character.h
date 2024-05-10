@@ -8,6 +8,7 @@
 #include "DamageComponent.h"
 #include "CharacterHealthBar.h"
 #include "DamageableActor.h"
+#include "GameplayTagContainer.h"
 #include "JamTest1Character.generated.h"
 
 
@@ -45,18 +46,23 @@ class AJamTest1Character : public ACharacter, public IDamageableActor
 	UPROPERTY(VisibleAnywhere)
 	class UDamageComponent* DamageComponent;
 
-	UPROPERTY(VisibleAnywhere)
-	class UWidgetComponent* HealthBarWidget;
+	float DefaultWalkSpeed;
 
 public:
 	AJamTest1Character();
 	
 	virtual void TakeDamage_Implementation(AActor* From, float Damage) override;
-
 	virtual void Heal_Implementation(float Heal) override;
+
+	virtual UDamageComponent* GetDamageComponent_Implementation() override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	UJT_SkillComponent* SkillComponent;
+
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	void AddWeapon(FGameplayTag WeaponTag);
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	void RemoveWeapon(FGameplayTag WeaponTag);
 
 protected:
 
@@ -65,7 +71,11 @@ protected:
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
-			
+
+	UFUNCTION()
+	void OnEffectAdded(FGameplayTag EffectTag, FTimerHandle Timer);
+	UFUNCTION()
+	void OnEffectRemoved(FGameplayTag EffectTag);
 
 protected:
 	// APawn interface

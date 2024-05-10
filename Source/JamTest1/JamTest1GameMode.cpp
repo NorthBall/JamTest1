@@ -37,5 +37,5 @@ void AJamTest1GameMode::BeginPlay()
 		return;
 	}
 
-	JTGameState->ResetEnemies(0);
+	//JTGameState->ResetEnemies(0);
 }

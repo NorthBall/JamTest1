@@ -53,7 +53,7 @@ protected:
 	void StartNextPhase();
 	UFUNCTION(BlueprintNativeEvent)
 	void ExecutePhase(FJT_SpawnerPhase& Phase);
-	UFUNCTION(BlueprintNativeEvent)
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void SpawnEnemy(UClass* EnemyClass, float SpawnRadius);
 	UFUNCTION(BlueprintNativeEvent)
 	void OnPhaseEnded(FJT_SpawnerPhase Phase);

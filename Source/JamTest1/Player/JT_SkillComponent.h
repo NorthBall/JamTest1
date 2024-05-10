@@ -3,9 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayTagContainer.h"
 #include "Components/ActorComponent.h"
 #include "JT_SkillComponent.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnEffectAddedSignature, FGameplayTag, EffectTag, FTimerHandle, Timer);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnEffectUpdatedSignature, FGameplayTag, EffectTag, FTimerHandle, NewTimer);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnEffectRemovedSignature, FGameplayTag, EffectTag);
 
 class UInputAction;
 
@@ -20,8 +24,18 @@ public:
 
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
+	UPROPERTY(BlueprintAssignable)
+	FOnEffectAddedSignature OnEffectAdded;
+	UPROPERTY(BlueprintAssignable)
+	FOnEffectUpdatedSignature OnEffectUpdated;
+	UPROPERTY(BlueprintAssignable)
+	FOnEffectRemovedSignature OnEffectRemoved;
 	UFUNCTION(BlueprintCallable)
 	bool CommitCooldownCost(UInputAction* Skill);
+	UFUNCTION(BlueprintCallable)
+	bool ApplyEffect(FGameplayTag EffectTag, float Duration);
+	UFUNCTION(BlueprintCallable)
+	bool HasEffect(FGameplayTag EffectTag);
 
 protected:
 	// Called when the game starts
@@ -32,13 +46,15 @@ protected:
 	UPROPERTY()
 	TArray<UInputAction*> SkillsOnCD;
 
-public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	UPROPERTY()
+	TMap<FGameplayTag, FTimerHandle> ActiveEffects;
 
 private:
 	UFUNCTION()
 	void StartSkillCD(UInputAction* Skill);
 	UFUNCTION()
 	void ClearSkillCD(UInputAction* Skill);
+
+	UFUNCTION()
+	void OnEffectEnded(FGameplayTag EffectTag);
 };
