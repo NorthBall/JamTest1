@@ -17,7 +17,7 @@ class JAMTEST1_API UCharacterHealthBar : public UUserWidget
 	GENERATED_BODY()
 
 public:
-	UFUNCTION()
+	UFUNCTION(BlueprintNativeEvent)
 	void OnSetHealth(float value);
 
 protected:

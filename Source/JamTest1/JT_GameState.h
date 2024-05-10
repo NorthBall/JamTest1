@@ -24,12 +24,20 @@ public:
 	void RegisterSpawner();
 	UFUNCTION()
 	void UnregisterSpawner();
+
+	UFUNCTION()
+	void RegisterKeyPoint();
+	UFUNCTION()
+	void UnregisterKeyPoint();
 	
 protected:
 	UPROPERTY(BlueprintReadWrite)
 	int32 RemainingEnemies;
 	UPROPERTY(BlueprintReadWrite)
 	int32 RemainingSpawners;
+	UPROPERTY(BlueprintReadWrite)
+	int32 RemainingKeyPoints;
+	
 	UPROPERTY(BlueprintReadWrite)
 	float CurrentScore = 0;
 

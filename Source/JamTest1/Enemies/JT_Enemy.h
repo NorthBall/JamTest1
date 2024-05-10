@@ -43,8 +43,8 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	virtual UDamageComponent* GetDamageComponent_Implementation() override;
 	virtual void TakeDamage_Implementation(AActor* From, float Damage) override;
-
 	virtual void AddImpulse_Implementation(AActor* From, float Impulse) override;
 
 	UPROPERTY(VisibleAnywhere)

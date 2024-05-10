@@ -77,6 +77,11 @@ void AJT_Enemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
+UDamageComponent* AJT_Enemy::GetDamageComponent_Implementation()
+{
+	return DamageComponent;
+}
+
 void AJT_Enemy::TakeDamage_Implementation(AActor* From, float Damage)
 {
 	DamageComponent->TakeDamage(Damage);

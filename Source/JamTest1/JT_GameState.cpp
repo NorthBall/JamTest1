@@ -47,6 +47,26 @@ void AJT_GameState::UnregisterSpawner()
 	}
 }
 
+void AJT_GameState::RegisterKeyPoint()
+{
+	RemainingKeyPoints++;
+}
+
+void AJT_GameState::UnregisterKeyPoint()
+{
+	RemainingKeyPoints--;
+	if(RemainingKeyPoints > 0)
+	{
+		return;
+	}
+	
+	auto GameMode = GetWorld()->GetAuthGameMode<AJamTest1GameMode>();
+	if (IsValid(GameMode))
+	{
+		GameMode->PlayerLose();
+	}
+}
+
 bool AJT_GameState::OnLevelCleared_Implementation()
 {
 	if(RemainingSpawners > 0

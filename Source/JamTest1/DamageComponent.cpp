@@ -19,6 +19,9 @@ UDamageComponent::UDamageComponent()
 void UDamageComponent::BeginPlay()
 {
 	Super::BeginPlay();
+	
+	CurrentHealth = MaxHealth;
+	OnSetHealthDelegate.ExecuteIfBound(GetHealthPercent());
 }
 
 
