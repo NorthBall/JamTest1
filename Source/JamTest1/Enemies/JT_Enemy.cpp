@@ -40,8 +40,10 @@ void AJT_Enemy::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	DamageComponent->OnSetHealthDelegate.BindDynamic(Cast<UCharacterHealthBar>(
-		HealthBarWidget->GetUserWidgetObject()), &UCharacterHealthBar::OnSetHealth);
+	UCharacterHealthBar* CharacterHealth = Cast<UCharacterHealthBar>(HealthBarWidget->GetUserWidgetObject());
+	if (IsValid(CharacterHealth)) {
+		DamageComponent->OnSetHealthDelegate.BindDynamic(CharacterHealth, &UCharacterHealthBar::OnSetHealth);
+	}
 
 	if (!IsValid(GetWorld()))
 	{

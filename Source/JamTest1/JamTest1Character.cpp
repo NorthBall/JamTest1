@@ -21,7 +21,7 @@ AJamTest1Character::AJamTest1Character()
 {
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
-		
+
 	// Don't rotate when the controller rotates. Let that just affect the camera.
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
@@ -76,15 +76,15 @@ void AJamTest1Character::BeginPlay()
 void AJamTest1Character::TakeDamage_Implementation(AActor* From, float Damage)
 {
 	DamageComponent->TakeDamage(Damage);
-	if(DamageComponent->IsDead())
+	if (DamageComponent->IsDead())
 	{
-		if(!IsValid(GetWorld()))
+		if (!IsValid(GetWorld()))
 		{
 			return;
 		}
 
 		auto GameMode = GetWorld()->GetAuthGameMode<AJamTest1GameMode>();
-		if(!IsValid(GameMode))
+		if (!IsValid(GameMode))
 		{
 			return;
 		}
@@ -117,8 +117,8 @@ UDamageComponent* AJamTest1Character::GetDamageComponent_Implementation()
 void AJamTest1Character::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	// Set up action bindings
-	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent)) {
-		
+	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
+	{
 		//Jumping
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ACharacter::Jump);
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
@@ -128,9 +128,7 @@ void AJamTest1Character::SetupPlayerInputComponent(class UInputComponent* Player
 
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AJamTest1Character::Look);
-
 	}
-
 }
 
 void AJamTest1Character::Move(const FInputActionValue& Value)
@@ -146,13 +144,13 @@ void AJamTest1Character::Move(const FInputActionValue& Value)
 
 		// get forward vector
 		const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-	
+
 		// get right vector 
 		const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
 		// add movement 
-		AddMovementInput(FVector(0,1,0), MovementVector.X);
-		AddMovementInput(FVector(1,0,0), MovementVector.Y);
+		AddMovementInput(FVector(0, 1, 0), MovementVector.X);
+		AddMovementInput(FVector(1, 0, 0), MovementVector.Y);
 	}
 }
 
@@ -168,7 +166,3 @@ void AJamTest1Character::Look(const FInputActionValue& Value)
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
 }
-
-
-
-
