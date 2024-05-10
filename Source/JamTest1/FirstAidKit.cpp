@@ -2,6 +2,7 @@
 
 
 #include "FirstAidKit.h"
+#include "JamTest1Character.h"
 #include "DamageableActor.h"
 
 // Sets default values
@@ -15,7 +16,7 @@ AFirstAidKit::AFirstAidKit()
 void AFirstAidKit::OnEnterPickupBox_Implementation(UPrimitiveComponent* OverlappedComp, AActor* Other, UPrimitiveComponent* OtherComp,
 	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (IsValid(Other) && Other->GetClass()->ImplementsInterface(UDamageableActor::StaticClass())) {
+	if (IsValid(Cast<AJamTest1Character>(Other))) {
 		IDamageableActor::Execute_Heal(Other, HealAmount);
 		Destroy();
 	}
