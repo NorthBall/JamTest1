@@ -64,6 +64,8 @@ bool UJT_SkillComponent::ApplyEffect(FGameplayTag EffectTag, float Duration)
 		ActiveEffects.Add(EffectTag, Handle);
 	}
 
+	OnEffect.Broadcast(EffectTag, ActiveEffects[EffectTag], false);
+
 	return true;
 }
 
@@ -105,17 +107,6 @@ void UJT_SkillComponent::ClearSkillCD(UInputAction* Skill)
 void UJT_SkillComponent::OnEffectEnded(FGameplayTag EffectTag)
 {
 	ActiveEffects.Remove(EffectTag);
-	
-	if (!EffectTag.MatchesTag(FGameplayTag::RequestGameplayTag("Effect.Weapon")))
-	{
-		return;
-	}
 
-	auto PlayerChar = Cast<AJamTest1Character>(GetOwner());
-	if (!IsValid(PlayerChar))
-	{
-		return;
-	}
-
-	PlayerChar->RemoveWeapon(EffectTag);
+	OnEffect.Broadcast(EffectTag, FTimerHandle(), true);
 }

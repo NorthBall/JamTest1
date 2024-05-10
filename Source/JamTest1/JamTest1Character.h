@@ -46,6 +46,8 @@ class AJamTest1Character : public ACharacter, public IDamageableActor
 	UPROPERTY(VisibleAnywhere)
 	class UDamageComponent* DamageComponent;
 
+	float DefaultWalkSpeed;
+
 public:
 	AJamTest1Character();
 	
@@ -69,7 +71,8 @@ protected:
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
-			
+
+	void OnEffect(FGameplayTag EffectTag, FTimerHandle Timer, bool IsEnded);
 
 protected:
 	// APawn interface
