@@ -57,11 +57,14 @@ bool UJT_SkillComponent::ApplyEffect(FGameplayTag EffectTag, float Duration)
 		}
 
 		GetWorld()->GetTimerManager().SetTimer(Handle, Delegate, Duration, false);
+		ActiveEffects.Add(EffectTag, Handle);
+		OnEffectUpdated.Broadcast(EffectTag, Handle);
 	}
 	else
 	{
 		GetWorld()->GetTimerManager().SetTimer(Handle, Delegate, Duration, false);
 		ActiveEffects.Add(EffectTag, Handle);
+		OnEffectAdded.Broadcast(EffectTag, Handle);
 	}
 
 	return true;
@@ -105,6 +108,7 @@ void UJT_SkillComponent::ClearSkillCD(UInputAction* Skill)
 void UJT_SkillComponent::OnEffectEnded(FGameplayTag EffectTag)
 {
 	ActiveEffects.Remove(EffectTag);
+	OnEffectRemoved.Broadcast(EffectTag);
 	
 	if (!EffectTag.MatchesTag(FGameplayTag::RequestGameplayTag("Effect.Weapon")))
 	{
