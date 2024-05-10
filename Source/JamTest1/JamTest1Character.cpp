@@ -65,8 +65,10 @@ void AJamTest1Character::BeginPlay()
 	// Call the base class  
 	Super::BeginPlay();
 
-	DamageComponent->OnSetHealthDelegate.BindDynamic(Cast<UCharacterHealthBar>(
-		HealthBarWidget->GetUserWidgetObject()), &UCharacterHealthBar::OnSetHealth);
+	UCharacterHealthBar* CharacterHealth = Cast<UCharacterHealthBar>(HealthBarWidget->GetUserWidgetObject());
+	if (IsValid(CharacterHealth)) {
+		DamageComponent->OnSetHealthDelegate.BindDynamic(CharacterHealth, & UCharacterHealthBar::OnSetHealth);
+	}
 
 	//Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
