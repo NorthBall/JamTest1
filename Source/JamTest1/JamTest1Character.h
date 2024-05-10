@@ -8,6 +8,7 @@
 #include "DamageComponent.h"
 #include "CharacterHealthBar.h"
 #include "DamageableActor.h"
+#include "GameplayTagContainer.h"
 #include "JamTest1Character.generated.h"
 
 
@@ -49,7 +50,6 @@ public:
 	AJamTest1Character();
 	
 	virtual void TakeDamage_Implementation(AActor* From, float Damage) override;
-
 	virtual void Heal_Implementation(float Heal) override;
 
 	virtual UDamageComponent* GetDamageComponent_Implementation() override;
@@ -57,6 +57,11 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	UJT_SkillComponent* SkillComponent;
 
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	void AddWeapon(FGameplayTag WeaponTag);
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	void RemoveWeapon(FGameplayTag WeaponTag);
+	
 	UPROPERTY(VisibleAnywhere)
 	class UWidgetComponent* HealthBarWidget;
 

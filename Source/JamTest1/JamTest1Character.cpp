@@ -103,6 +103,14 @@ void AJamTest1Character::Heal_Implementation(float Heal)
 	DamageComponent->Heal(Heal);
 }
 
+void AJamTest1Character::AddWeapon_Implementation(FGameplayTag WeaponTag)
+{
+}
+
+void AJamTest1Character::RemoveWeapon_Implementation(FGameplayTag WeaponTag)
+{
+}
+
 UDamageComponent* AJamTest1Character::GetDamageComponent_Implementation()
 {
 	return DamageComponent;

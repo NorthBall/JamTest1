@@ -3,14 +3,10 @@
 
 #include "JT_SkillComponent.h"
 
-// Sets default values for this component's properties
+#include "JamTest1/JamTest1Character.h"
+
 UJT_SkillComponent::UJT_SkillComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
 }
 
 void UJT_SkillComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -34,23 +30,36 @@ bool UJT_SkillComponent::CommitCooldownCost(UInputAction* Skill)
 	return true;
 }
 
+bool UJT_SkillComponent::ApplyEffect(FGameplayTag EffectTag, float Duration)
+{	
+	if(!IsValid(GetWorld()))
+	{
+		return false;
+	}
 
-// Called when the game starts
+	FTimerHandle Handle;
+
+	//Has this effect
+	if(ActiveEffects.Contains(EffectTag))
+	{
+		Handle = ActiveEffects[EffectTag];
+		//Existing effect duration cannot be increased
+		if (GetWorld()->GetTimerManager().GetTimerRemaining(Handle) >= Duration)
+		{
+			return false;
+		}
+	}
+	
+	FTimerDelegate Delegate;
+	Delegate.BindUObject(this,&UJT_SkillComponent::OnEffectEnded, EffectTag);
+	GetWorld()->GetTimerManager().SetTimer(Handle, Delegate, Duration, false);
+
+	return true;
+}
+
 void UJT_SkillComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// ...
-	
-}
-
-
-// Called every frame
-void UJT_SkillComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
 }
 
 void UJT_SkillComponent::StartSkillCD(UInputAction* Skill)
@@ -76,5 +85,21 @@ void UJT_SkillComponent::StartSkillCD(UInputAction* Skill)
 void UJT_SkillComponent::ClearSkillCD(UInputAction* Skill)
 {
 	SkillsOnCD.Remove(Skill);
+}
+
+void UJT_SkillComponent::OnEffectEnded(FGameplayTag EffectTag)
+{
+	if(!EffectTag.MatchesTag(FGameplayTag::RequestGameplayTag("Effect.Weapon")))
+	{
+		return;
+	}
+
+	auto PlayerChar = Cast<AJamTest1Character>(GetOwner());
+	if(!IsValid(PlayerChar))
+	{
+		return;
+	}
+
+	PlayerChar->RemoveWeapon(EffectTag);
 }
 

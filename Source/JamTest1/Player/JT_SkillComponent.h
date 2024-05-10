@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayTagContainer.h"
 #include "Components/ActorComponent.h"
 #include "JT_SkillComponent.generated.h"
 
@@ -22,6 +23,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	bool CommitCooldownCost(UInputAction* Skill);
+	UFUNCTION(BlueprintCallable)
+	bool ApplyEffect(FGameplayTag EffectTag, float Duration);
 
 protected:
 	// Called when the game starts
@@ -32,13 +35,15 @@ protected:
 	UPROPERTY()
 	TArray<UInputAction*> SkillsOnCD;
 
-public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	UPROPERTY()
+	TMap<FGameplayTag, FTimerHandle> ActiveEffects;
 
 private:
 	UFUNCTION()
 	void StartSkillCD(UInputAction* Skill);
 	UFUNCTION()
 	void ClearSkillCD(UInputAction* Skill);
+
+	UFUNCTION()
+	void OnEffectEnded(FGameplayTag EffectTag);
 };
