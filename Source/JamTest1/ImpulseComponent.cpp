@@ -33,7 +33,7 @@ void UImpulseComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAct
 		if (RemainingImpulseTime > 0) {
 			FVector Target = Actor->GetActorLocation() - ImpulseDirection;
 			FVector NewLoc = FMath::VInterpConstantTo(Actor->GetActorLocation(), Target, DeltaTime, ImpulseStrength);
-			Actor->SetActorLocation(NewLoc);
+			Actor->SetActorLocation(NewLoc, true);
 			RemainingImpulseTime -= DeltaTime;
 		}
 	}
