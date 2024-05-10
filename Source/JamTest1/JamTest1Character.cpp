@@ -65,6 +65,9 @@ void AJamTest1Character::BeginPlay()
 	// Call the base class  
 	Super::BeginPlay();
 
+	DamageComponent->OnSetHealthDelegate.BindDynamic(Cast<UCharacterHealthBar>(
+		HealthBarWidget->GetUserWidgetObject()), &UCharacterHealthBar::OnSetHealth);
+
 	//Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{
@@ -73,8 +76,6 @@ void AJamTest1Character::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
-
-	DamageComponent->SetHealthBarWidget(Cast<UCharacterHealthBar>(HealthBarWidget->GetUserWidgetObject()));
 }
 
 void AJamTest1Character::TakeDamage_Implementation(AActor* From, float Damage)
@@ -108,6 +109,11 @@ void AJamTest1Character::AddWeapon_Implementation(FGameplayTag WeaponTag)
 
 void AJamTest1Character::RemoveWeapon_Implementation(FGameplayTag WeaponTag)
 {
+}
+
+UDamageComponent* AJamTest1Character::GetDamageComponent_Implementation()
+{
+	return DamageComponent;
 }
 
 //////////////////////////////////////////////////////////////////////////

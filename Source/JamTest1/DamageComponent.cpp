@@ -25,14 +25,20 @@ void UDamageComponent::BeginPlay()
 void UDamageComponent::TakeDamage(float Damage)
 {
 	CurrentHealth = FMath::Clamp(CurrentHealth - Damage, 0.0f, MaxHealth);
-	HealthBar->SetHealthBarValue(CurrentHealth / MaxHealth);
+	OnSetHealthDelegate.ExecuteIfBound(GetHealthPercent());
 }
 
 
 void UDamageComponent::Heal(float Heal)
 {
-	CurrentHealth = FMath::Max(CurrentHealth + Heal, MaxHealth);
-	HealthBar->SetHealthBarValue(CurrentHealth / MaxHealth);
+	CurrentHealth = FMath::Min(CurrentHealth + Heal, MaxHealth);
+	OnSetHealthDelegate.ExecuteIfBound(GetHealthPercent());
+}
+
+
+float UDamageComponent::GetHealthPercent()
+{
+	return (MaxHealth > 0) ? (CurrentHealth / MaxHealth) : 0;
 }
 
 

@@ -8,6 +8,8 @@
 #include "GameplayTagContainer.h"
 #include "JT_UtilityFunctions.generated.h"
 
+class UDamageComponent;
+
 UCLASS()
 class JAMTEST1_API UJT_UtilityFunctions : public UBlueprintFunctionLibrary
 {
@@ -16,6 +18,9 @@ class JAMTEST1_API UJT_UtilityFunctions : public UBlueprintFunctionLibrary
 public:
 	UFUNCTION(BlueprintCallable, Category = "DealDamage")
 	static void DealDamage(AActor* Actor, AActor* FromActor, float Damage);
+	UFUNCTION(BlueprintCallable, Category = "DealDamage")
+	static UDamageComponent* GetDamageComponent(AActor* Actor);
+
 	UFUNCTION(BlueprintCallable, Category = "DealDamage")
 	static void AddImpulse(AActor* Actor, AActor* FromActor, float Impulse);
 
