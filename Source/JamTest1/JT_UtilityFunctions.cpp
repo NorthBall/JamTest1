@@ -42,6 +42,17 @@ bool UJT_UtilityFunctions::ApplyEffect(AActor* Actor, FGameplayTag EffectTag, fl
 	return PlayerChar->SkillComponent->ApplyEffect(EffectTag, Duration);
 }
 
+bool UJT_UtilityFunctions::HasEffect(AActor* Actor, FGameplayTag EffectTag)
+{
+	auto PlayerChar = Cast<AJamTest1Character>(Actor);
+	if(!IsValid(PlayerChar))
+	{
+		return false;
+	}
+
+	return PlayerChar->SkillComponent->HasEffect(EffectTag);
+}
+
 bool UJT_UtilityFunctions::SpawnProjectile(AActor* Caller, TSubclassOf<AActor> ProjectileClass, FVector RelativeLocation)
 {
 	if(!IsValid(Caller)

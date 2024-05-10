@@ -16,7 +16,7 @@ public:
 	// Sets default values for this actor's properties
 	AFirstAidKit();
 
-	void OnEnterPickupBox(UPrimitiveComponent* OverlappedComp, AActor* Other, UPrimitiveComponent* OtherComp,
+	virtual void OnEnterPickupBox_Implementation(UPrimitiveComponent* OverlappedComp, AActor* Other, UPrimitiveComponent* OtherComp,
 		int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
 
 	UPROPERTY(EditAnywhere)

@@ -12,7 +12,7 @@ AFirstAidKit::AFirstAidKit()
 
 }
 
-void AFirstAidKit::OnEnterPickupBox(UPrimitiveComponent* OverlappedComp, AActor* Other, UPrimitiveComponent* OtherComp,
+void AFirstAidKit::OnEnterPickupBox_Implementation(UPrimitiveComponent* OverlappedComp, AActor* Other, UPrimitiveComponent* OtherComp,
 	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (IsValid(Other) && Other->GetClass()->ImplementsInterface(UDamageableActor::StaticClass())) {

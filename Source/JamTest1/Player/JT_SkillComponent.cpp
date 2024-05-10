@@ -11,17 +11,17 @@ UJT_SkillComponent::UJT_SkillComponent()
 
 void UJT_SkillComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
-	if(IsValid(GetWorld()))
+	if (IsValid(GetWorld()))
 	{
 		GetWorld()->GetTimerManager().ClearAllTimersForObject(this);
 	}
-	
+
 	Super::EndPlay(EndPlayReason);
 }
 
 bool UJT_SkillComponent::CommitCooldownCost(UInputAction* Skill)
 {
-	if(SkillsOnCD.Contains(Skill))
+	if (SkillsOnCD.Contains(Skill))
 	{
 		return false;
 	}
@@ -31,16 +31,23 @@ bool UJT_SkillComponent::CommitCooldownCost(UInputAction* Skill)
 }
 
 bool UJT_SkillComponent::ApplyEffect(FGameplayTag EffectTag, float Duration)
-{	
-	if(!IsValid(GetWorld()))
+{
+	if (Duration <= 0.f)
+	{
+		return false;
+	}
+
+	if (!IsValid(GetWorld()))
 	{
 		return false;
 	}
 
 	FTimerHandle Handle;
+	FTimerDelegate Delegate;
+	Delegate.BindUObject(this, &UJT_SkillComponent::OnEffectEnded, EffectTag);
 
 	//Has this effect
-	if(ActiveEffects.Contains(EffectTag))
+	if (ActiveEffects.Contains(EffectTag))
 	{
 		Handle = ActiveEffects[EffectTag];
 		//Existing effect duration cannot be increased
@@ -48,13 +55,21 @@ bool UJT_SkillComponent::ApplyEffect(FGameplayTag EffectTag, float Duration)
 		{
 			return false;
 		}
+
+		GetWorld()->GetTimerManager().SetTimer(Handle, Delegate, Duration, false);
 	}
-	
-	FTimerDelegate Delegate;
-	Delegate.BindUObject(this,&UJT_SkillComponent::OnEffectEnded, EffectTag);
-	GetWorld()->GetTimerManager().SetTimer(Handle, Delegate, Duration, false);
+	else
+	{
+		GetWorld()->GetTimerManager().SetTimer(Handle, Delegate, Duration, false);
+		ActiveEffects.Add(EffectTag, Handle);
+	}
 
 	return true;
+}
+
+bool UJT_SkillComponent::HasEffect(FGameplayTag EffectTag)
+{
+	return ActiveEffects.Contains(EffectTag);
 }
 
 void UJT_SkillComponent::BeginPlay()
@@ -64,21 +79,21 @@ void UJT_SkillComponent::BeginPlay()
 
 void UJT_SkillComponent::StartSkillCD(UInputAction* Skill)
 {
-	if(!SkillCD_Duration.Contains(Skill))
+	if (!SkillCD_Duration.Contains(Skill))
 	{
 		return;
 	}
-	
-	if(!IsValid(GetWorld()))
+
+	if (!IsValid(GetWorld()))
 	{
 		return;
 	}
 
 	SkillsOnCD.AddUnique(Skill);
-	
+
 	FTimerHandle Handle;
 	FTimerDelegate Delegate;
-	Delegate.BindUObject(this,&UJT_SkillComponent::ClearSkillCD, Skill);
+	Delegate.BindUObject(this, &UJT_SkillComponent::ClearSkillCD, Skill);
 	GetWorld()->GetTimerManager().SetTimer(Handle, Delegate, SkillCD_Duration[Skill], false);
 }
 
@@ -89,17 +104,18 @@ void UJT_SkillComponent::ClearSkillCD(UInputAction* Skill)
 
 void UJT_SkillComponent::OnEffectEnded(FGameplayTag EffectTag)
 {
-	if(!EffectTag.MatchesTag(FGameplayTag::RequestGameplayTag("Effect.Weapon")))
+	ActiveEffects.Remove(EffectTag);
+	
+	if (!EffectTag.MatchesTag(FGameplayTag::RequestGameplayTag("Effect.Weapon")))
 	{
 		return;
 	}
 
 	auto PlayerChar = Cast<AJamTest1Character>(GetOwner());
-	if(!IsValid(PlayerChar))
+	if (!IsValid(PlayerChar))
 	{
 		return;
 	}
 
 	PlayerChar->RemoveWeapon(EffectTag);
 }
-

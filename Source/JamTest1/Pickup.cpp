@@ -33,7 +33,7 @@ void APickup::Tick(float DeltaTime)
 }
 
 
-void APickup::OnEnterPickupBox(UPrimitiveComponent* OverlappedComp, AActor* Other, UPrimitiveComponent* OtherComp,
+void APickup::OnEnterPickupBox_Implementation(UPrimitiveComponent* OverlappedComp, AActor* Other, UPrimitiveComponent* OtherComp,
 	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	Destroy();

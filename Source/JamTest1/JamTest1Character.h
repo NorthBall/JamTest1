@@ -61,9 +61,6 @@ public:
 	void AddWeapon(FGameplayTag WeaponTag);
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
 	void RemoveWeapon(FGameplayTag WeaponTag);
-	
-	UPROPERTY(VisibleAnywhere)
-	class UWidgetComponent* HealthBarWidget;
 
 protected:
 

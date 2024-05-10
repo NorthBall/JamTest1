@@ -24,8 +24,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "DealDamage")
 	static void AddImpulse(AActor* Actor, AActor* FromActor, float Impulse);
 
-	UFUNCTION(BlueprintCallable, Category = "DealDamage")
+	UFUNCTION(BlueprintCallable, Category = "Effects")
 	static bool ApplyEffect(AActor* Actor, FGameplayTag EffectTag, float Duration);
+	UFUNCTION(BlueprintCallable, Category = "Effects")
+	static bool HasEffect(AActor* Actor, FGameplayTag EffectTag);
 
 	UFUNCTION(BlueprintCallable)
 	static bool SpawnProjectile(AActor* Caller, TSubclassOf<AActor> ProjectileClass, FVector RelativeLocation = FVector(0,0,0));
