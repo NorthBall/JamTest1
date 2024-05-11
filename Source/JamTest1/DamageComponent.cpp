@@ -29,6 +29,7 @@ void UDamageComponent::TakeDamage(float Damage)
 {
 	CurrentHealth = FMath::Clamp(CurrentHealth - Damage, 0.0f, MaxHealth);
 	OnSetHealthDelegate.ExecuteIfBound(GetHealthPercent());
+	OnDamageDealt.Broadcast(Damage);
 }
 
 

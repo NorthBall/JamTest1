@@ -8,6 +8,8 @@
 #include "Delegates/Delegate.h"
 #include "DamageComponent.generated.h"
 
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDamageDealt, float, Damage);
 DECLARE_DYNAMIC_DELEGATE_OneParam(FOnSetHealthDelegate, float, Value);
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
@@ -36,6 +38,9 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	float CurrentHealth;
 
+	UPROPERTY(BlueprintAssignable)
+	FOnDamageDealt OnDamageDealt;
+	
 	FOnSetHealthDelegate OnSetHealthDelegate;
 
 protected:
