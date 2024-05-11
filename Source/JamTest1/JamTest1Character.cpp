@@ -133,7 +133,7 @@ void AJamTest1Character::OnEffectRemoved(FGameplayTag EffectTag)
 
 	if (EffectTag.MatchesTag(FGameplayTag::RequestGameplayTag("Effect.Weapon")))
 	{
-		RemoveWeapon_Implementation(EffectTag);
+		RemoveWeapon(EffectTag);
 	}
 }
 
